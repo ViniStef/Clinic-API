@@ -1,15 +1,15 @@
 package vinistef.clinic_api.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.validation.Valid;
+import lombok.*;
 import vinistef.clinic_api.dto.DoctorRegisterDto;
+import vinistef.clinic_api.dto.DoctorUpdateData;
 
 @Table(name = "doctors")
 @Entity(name = "Doctor")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -38,4 +38,15 @@ public class Doctor {
     @Embedded
     private Address address;
 
+    public void updateData(@Valid DoctorUpdateData doctorUpdateData) {
+        if (doctorUpdateData.name() != null) {
+            this.name = doctorUpdateData.name();
+        }
+        if (doctorUpdateData.cellphone() != null) {
+            this.cellphone = doctorUpdateData.cellphone();
+        }
+        if (doctorUpdateData.addressDataDto() != null) {
+            this.address.updateAddress(doctorUpdateData.addressDataDto());
+        }
+    }
 }

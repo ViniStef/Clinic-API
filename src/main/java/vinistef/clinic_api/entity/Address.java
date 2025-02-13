@@ -31,4 +31,27 @@ public class Address {
         this.zipCode = addressDataDto.zipCode();
     }
 
+    public void updateAddress(AddressDataDto addressDataDto) {
+        if (addressDataDto.street() != null) {
+            this.street = addressDataDto.street();
+        }
+        if (addressDataDto.number() != null) {
+            this.number = addressDataDto.number();
+        }
+        if (addressDataDto.complement() != null) {
+            this.complement = addressDataDto.complement();
+        }
+        if (addressDataDto.neighborhood() != null) {
+            this.neighborhood = addressDataDto.neighborhood();
+        }
+        if (addressDataDto.city() != null) {
+            this.city = addressDataDto.city();
+        }
+        if (addressDataDto.state() != null) {
+            this.state = addressDataDto.state();
+        }
+        if (addressDataDto.zipCode() != null) {
+            this.zipCode = addressDataDto.zipCode();
+        }
+    }
 }

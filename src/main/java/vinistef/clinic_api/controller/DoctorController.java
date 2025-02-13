@@ -7,6 +7,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import vinistef.clinic_api.dto.DoctorUpdateData;
 import vinistef.clinic_api.dto.GetDoctorDataDto;
 import vinistef.clinic_api.dto.DoctorRegisterDto;
 import vinistef.clinic_api.entity.Doctor;
@@ -32,7 +33,15 @@ public class DoctorController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<GetDoctorDataDto>> getAllDoctors(@PageableDefault(size = 10, sort = {"nome"}) Pageable pageable) {
+    public ResponseEntity<Page<GetDoctorDataDto>> getAll(@PageableDefault(size = 10, sort = {"nome"}) Pageable pageable) {
         return ResponseEntity.ok((doctorRepository.findAll(pageable).map(GetDoctorDataDto::new)));
+    }
+
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<GetDoctorDataDto> update(@PathVariable String id, @RequestBody @Valid DoctorUpdateData doctorUpdateData) {
+        Doctor doctor = doctorRepository.findById(Long.parseLong(id)).orElseThrow();
+        doctor.updateData(doctorUpdateData);
+        return ResponseEntity.ok().body(new GetDoctorDataDto(doctor));
     }
 }
