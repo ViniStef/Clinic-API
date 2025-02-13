@@ -10,7 +10,6 @@ import vinistef.clinic_api.dto.AddressDataDto;
 
 @Embeddable
 @Getter
-
 @AllArgsConstructor
 public class Address {
     private String street;

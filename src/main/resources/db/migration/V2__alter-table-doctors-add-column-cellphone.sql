@@ -1,0 +1,1 @@
+ALTER TABLE doctors ADD COLUMN cellphone VARCHAR(20) NOT NULL;
