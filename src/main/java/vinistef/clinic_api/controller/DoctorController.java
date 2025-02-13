@@ -1,5 +1,6 @@
 package vinistef.clinic_api.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +22,7 @@ public class DoctorController {
 
     @PostMapping
     @Transactional
-    public void register(@RequestBody DoctorRegisterDto doctorRegisterDto) {
+    public void register(@RequestBody @Valid DoctorRegisterDto doctorRegisterDto) {
         doctorRepository.save(new Doctor(doctorRegisterDto));
     }
 }
