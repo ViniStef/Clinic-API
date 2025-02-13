@@ -14,16 +14,6 @@ import vinistef.clinic_api.dto.DoctorUpdateData;
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class Doctor {
-
-    public Doctor(DoctorRegisterDto doctorRegisterDto) {
-        this.name = doctorRegisterDto.name();
-        this.email = doctorRegisterDto.email();
-        this.cellphone = doctorRegisterDto.cellphone();
-        this.crm = doctorRegisterDto.crm();
-        this.specialty = doctorRegisterDto.specialty();
-        this.address = new Address(doctorRegisterDto.address());
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,6 +28,18 @@ public class Doctor {
     @Embedded
     private Address address;
 
+    private Boolean active;
+
+    public Doctor(DoctorRegisterDto doctorRegisterDto) {
+        this.name = doctorRegisterDto.name();
+        this.email = doctorRegisterDto.email();
+        this.cellphone = doctorRegisterDto.cellphone();
+        this.crm = doctorRegisterDto.crm();
+        this.specialty = doctorRegisterDto.specialty();
+        this.address = new Address(doctorRegisterDto.address());
+        this.active = true;
+    }
+
     public void updateData(@Valid DoctorUpdateData doctorUpdateData) {
         if (doctorUpdateData.name() != null) {
             this.name = doctorUpdateData.name();
@@ -48,5 +50,9 @@ public class Doctor {
         if (doctorUpdateData.addressDataDto() != null) {
             this.address.updateAddress(doctorUpdateData.addressDataDto());
         }
+    }
+
+    public void delete() {
+        this.setActive(false);
     }
 }

@@ -33,8 +33,8 @@ public class DoctorController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<GetDoctorDataDto>> getAll(@PageableDefault(size = 10, sort = {"nome"}) Pageable pageable) {
-        return ResponseEntity.ok((doctorRepository.findAll(pageable).map(GetDoctorDataDto::new)));
+    public ResponseEntity<Page<GetDoctorDataDto>> getAll(@PageableDefault(size = 10, sort = {"name"}) Pageable pageable) {
+        return ResponseEntity.ok((doctorRepository.findAllByActiveTrue(pageable).map(GetDoctorDataDto::new)));
     }
 
     @PutMapping("/{id}")
@@ -43,5 +43,13 @@ public class DoctorController {
         Doctor doctor = doctorRepository.findById(Long.parseLong(id)).orElseThrow();
         doctor.updateData(doctorUpdateData);
         return ResponseEntity.ok().body(new GetDoctorDataDto(doctor));
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<Object> delete(@PathVariable String id) {
+        Doctor doctorToDelete = doctorRepository.findById(Long.parseLong(id)).orElseThrow();
+        doctorToDelete.delete();
+        return ResponseEntity.status(204).build();
     }
 }
