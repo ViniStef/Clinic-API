@@ -3,8 +3,8 @@ package vinistef.clinic_api.entity;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.*;
-import vinistef.clinic_api.dto.DoctorRegisterDto;
-import vinistef.clinic_api.dto.DoctorUpdateData;
+import vinistef.clinic_api.dto.RegisterDoctorDto;
+import vinistef.clinic_api.dto.UpdateDoctorDto;
 
 @Table(name = "doctors")
 @Entity(name = "Doctor")
@@ -30,17 +30,17 @@ public class Doctor {
 
     private Boolean active;
 
-    public Doctor(DoctorRegisterDto doctorRegisterDto) {
-        this.name = doctorRegisterDto.name();
-        this.email = doctorRegisterDto.email();
-        this.cellphone = doctorRegisterDto.cellphone();
-        this.crm = doctorRegisterDto.crm();
-        this.specialty = doctorRegisterDto.specialty();
-        this.address = new Address(doctorRegisterDto.address());
+    public Doctor(RegisterDoctorDto registerDoctorDto) {
+        this.name = registerDoctorDto.name();
+        this.email = registerDoctorDto.email();
+        this.cellphone = registerDoctorDto.cellphone();
+        this.crm = registerDoctorDto.crm();
+        this.specialty = registerDoctorDto.specialty();
+        this.address = new Address(registerDoctorDto.address());
         this.active = true;
     }
 
-    public void updateData(@Valid DoctorUpdateData doctorUpdateData) {
+    public void updateData(@Valid UpdateDoctorDto doctorUpdateData) {
         if (doctorUpdateData.name() != null) {
             this.name = doctorUpdateData.name();
         }

@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import vinistef.clinic_api.entity.Specialty;
 
-public record DoctorRegisterDto(
+public record RegisterDoctorDto(
         @NotBlank
         String name,
 
