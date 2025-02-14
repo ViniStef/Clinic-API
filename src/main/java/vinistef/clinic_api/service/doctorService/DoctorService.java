@@ -1,5 +1,6 @@
 package vinistef.clinic_api.service.doctorService;
 
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ public class DoctorService implements IDoctorService {
     }
 
     @Override
+    @Transactional
     public DoctorRegisterResponseDto registerDoctor(RegisterDoctorDto doctor) {
         Doctor newDoctor = new Doctor(doctor);
         doctorRepository.save(newDoctor);
@@ -35,13 +37,15 @@ public class DoctorService implements IDoctorService {
     }
 
     @Override
+    @Transactional
     public DoctorDetailsDto updateDoctor(String id, UpdateDoctorDto doctor) {
         Doctor doctorFound = doctorRepository.findById(Long.parseLong(id)).orElseThrow();
-        doctorFound.updateData(doctor);
+        doctorFound.updateDoctor(doctor);
         return new DoctorDetailsDto(doctorFound);
     }
 
     @Override
+    @Transactional
     public void deleteDoctor(String id) {
         Doctor doctorToDelete = doctorRepository.findById(Long.parseLong(id)).orElseThrow();
         doctorToDelete.delete();

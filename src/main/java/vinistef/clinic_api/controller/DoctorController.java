@@ -22,7 +22,6 @@ public class DoctorController {
     }
 
     @PostMapping
-    @Transactional
     public ResponseEntity<DoctorDetailsDto> register(@RequestBody @Valid RegisterDoctorDto registerDoctorDto, UriComponentsBuilder uriComponentsBuilder) {
         DoctorRegisterResponseDto doctorRegisterResponse = doctorService.registerDoctor(registerDoctorDto);
         var uri = uriComponentsBuilder.path("/doctor/{id}").buildAndExpand(doctorRegisterResponse.id()).toUri();
@@ -45,15 +44,13 @@ public class DoctorController {
     }
 
     @PutMapping("/{id}")
-    @Transactional
     public ResponseEntity<DoctorDetailsDto> update(@PathVariable String id, @RequestBody @Valid UpdateDoctorDto doctorUpdateData) {
         DoctorDetailsDto doctorDetails = doctorService.updateDoctor(id, doctorUpdateData);
 
-        return ResponseEntity.ok().body(doctorDetails);
+        return ResponseEntity.status(200).body(doctorDetails);
     }
 
     @DeleteMapping("/{id}")
-    @Transactional
     public ResponseEntity<Void> delete(@PathVariable String id) {
         doctorService.deleteDoctor(id);
 

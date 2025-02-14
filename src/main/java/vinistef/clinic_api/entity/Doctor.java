@@ -6,13 +6,12 @@ import lombok.*;
 import vinistef.clinic_api.dto.RegisterDoctorDto;
 import vinistef.clinic_api.dto.UpdateDoctorDto;
 
-@Table(name = "doctors")
 @Entity(name = "Doctor")
+@Table(name = "doctors")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
 public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +39,7 @@ public class Doctor {
         this.active = true;
     }
 
-    public void updateData(@Valid UpdateDoctorDto doctorUpdateData) {
+    public void updateDoctor(@Valid UpdateDoctorDto doctorUpdateData) {
         if (doctorUpdateData.name() != null) {
             this.name = doctorUpdateData.name();
         }
