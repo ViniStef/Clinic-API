@@ -10,7 +10,7 @@ import vinistef.clinic_api.dto.*;
 import vinistef.clinic_api.service.patientService.PatientService;
 
 @RestController
-@RequestMapping("/patient")
+@RequestMapping("/patients")
 public class PatientController {
 
     private final PatientService patientService;
