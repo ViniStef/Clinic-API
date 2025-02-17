@@ -9,22 +9,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vinistef.clinic_api.dto.AuthenticationDto;
+import vinistef.clinic_api.dto.JwtTokenDataDto;
+import vinistef.clinic_api.entity.User;
+import vinistef.clinic_api.service.tokenService.TokenService;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
+    private final TokenService tokenService;
 
-    public AuthenticationController(AuthenticationManager authenticationManager) {
+    public AuthenticationController(AuthenticationManager authenticationManager, TokenService tokenService) {
         this.authenticationManager = authenticationManager;
+        this.tokenService = tokenService;
     }
 
     @PostMapping
-    public ResponseEntity<Void> authenticate(@RequestBody @Valid AuthenticationDto authenticationDto) {
-        var token = new UsernamePasswordAuthenticationToken(authenticationDto.login(), authenticationDto.password());
-        var authentication = authenticationManager.authenticate(token);
+    public ResponseEntity<JwtTokenDataDto> authenticate(@RequestBody @Valid AuthenticationDto authenticationDto) {
+        var authenticationToken = new UsernamePasswordAuthenticationToken(authenticationDto.login(), authenticationDto.password());
+        var authentication = authenticationManager.authenticate(authenticationToken);
 
-        return ResponseEntity.ok().build();
+        String jwtToken = tokenService.generateToken((User) authentication.getPrincipal());
+
+        return ResponseEntity.ok(new JwtTokenDataDto(jwtToken));
     }
 }
