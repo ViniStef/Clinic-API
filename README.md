@@ -1,0 +1,1 @@
+Projeto para administrar contas e fluxo de informações de uma clínica. Essa API REST foi feita com o Spring Boot e teve como foco utilizar o Spring Security para garantir a segurança das rotas com o auxílio dos tokens JWT e o BCrypt para geração de criptografia hash!
